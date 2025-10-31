@@ -35,3 +35,25 @@ https://www.inf.ufpr.br/elias/redes/tpRedesII2025-2.html
 Aula de blockchain: https://www.inf.ufpr.br/elias/topredes/BlockChainTopARedes23.pdf
 
 Implementing a simple blockchain in Java: https://www.baeldung.com/java-blockchain
+
+
+# Servidor
+
+- Cria nodo genesis
+- Inicia o servidor e escutar requisições
+- Requisições aceitas:
+   - DEPOSITO - DEPOSIT
+   - RETIRADA -WITHDRAWL
+   - VERIFICARSALDO (função)
+- Formato da mensagem
+   - PROPRIETARIO - OPERAÇÃO (+/- valor)
+- validar operação
+   - percorrer a lista, verificar saldo e ai validar operação
+- Calculo o hash e adiciono o novo bloco ao fim da lista encadeada
+- Retornar sucesso ou falha da transação
+   - implementar saida de erros (mostrar saldo atual no caso usuario existe mas deu erro na transação) 
+# Cliente
+- Mandar msg pro servidor
+- esperar resposta
+
+
