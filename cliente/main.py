@@ -11,6 +11,9 @@ def client(host = 'localhost', port=8082):
         # Send data
         message = "+500"
         print ("Sending %s" % message)
+
+        # FAZER MENUZINHO BONITO PARA GERAR A MSG
+
         sock.sendall(message.encode('utf-8'))
         # Look for the response
         amount_received = 0
