@@ -1,5 +1,19 @@
 import socket
+import json
 import blockchain
+
+def handleRequest(data):
+    response = {}
+
+    if not data['owner_name'] or not data['amount']:
+        response['status'] = "erro"
+        response['tipo'] = "requisiçao nao contem owner ou quantia validos"
+    elif not type(data['amount']) is int:
+        response['status'] = "erro"
+        response['tipo'] = "valor de quantia nao eh um inteiro"
+    else:
+        response['status'] = "pendente" # ainda precisa verificar se a transaçao eh valida
+    return response
 
 def server(host = 'localhost', port=8082):
     # criar block chain inicial
@@ -18,28 +32,23 @@ def server(host = 'localhost', port=8082):
     while True:
         print ("Waiting to receive message from client")
         client, address = sock.accept()
-        data = client.recv(data_payload)
-        if data:
-
-            # validar requisição
-
-
-            if(validacao falhou): # falhas de entrada aqui, como formato errado etc
-                # tratar falha
-                # enviar msg de erro
-
-
-
+        json_data = client.recv(data_payload)
+        if json_data:
+            data = json_data.decode('utf-8')
+            data = json.loads(data)
+            print ("Data: %s" % data)
             response = handleRequest(data)
+            print ("Sending %s to %s" % (response, address))
+            json_response = json.dumps(response)
+
             # reponse pode ser:
             #   sucesso: transação deu boa, envia msg de sucesso + saldo atual?
             #   erro na transação: mandar msg de erro + saldo atual
             #   erro usuario nao existe: mandar msg de erro
 
-            print ("Data: %s" %data)
             # eviar resposta
-            client.send(data)
-            print ("sent %s bytes back to %s" % (data, address))
+            client.sendall(json_response.encode('utf-8'))
+            
             # end connection
             client.close()
             i+=1

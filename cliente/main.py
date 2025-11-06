@@ -1,4 +1,5 @@
 import socket
+import json
 def client(host = 'localhost', port=8082):
     # Create a TCP/IP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -9,12 +10,15 @@ def client(host = 'localhost', port=8082):
     # Send data
     try:
         # Send data
-        message = "+500"
-        print ("Sending %s" % message)
+        # message = "+500"
+        data = {}
 
-        # FAZER MENUZINHO BONITO PARA GERAR A MSG
+        data['owner_name'] = input("Digite o nome do proprietario: ")
+        data['amount'] = int(input("Digite a quantia da movimentação: "))
+        print ("Sending %s" % data)
+        json_data = json.dumps(data)
 
-        sock.sendall(message.encode('utf-8'))
+        sock.sendall(json_data.encode('utf-8'))
         # Look for the response
         amount_received = 0
         amount_expected = len(message)
