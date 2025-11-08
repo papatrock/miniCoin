@@ -1,6 +1,6 @@
 import socket
 import json
-import blockchain
+import Blockchain
 
 def handleRequest(data):
     response = {}
@@ -16,7 +16,8 @@ def handleRequest(data):
     return response
 
 def server(host = 'localhost', port=8082):
-    # criar block chain inicial
+    blockchain = Blockchain.BlockChain()  #criar block chain inicial
+
     data_payload = 2048 #The maximum amount of data to be received at once
     # Create a TCP socket
     sock = socket.socket(socket.AF_INET,  socket.SOCK_STREAM)
@@ -48,9 +49,7 @@ def server(host = 'localhost', port=8082):
 
             # eviar resposta
             client.sendall(json_response.encode('utf-8'))
-            
+
             # end connection
             client.close()
-            i+=1
-            if i>=3: break
 server()
