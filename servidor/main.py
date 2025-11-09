@@ -5,7 +5,7 @@ import Blockchain
 def handleRequest(data):
     response = {}
 
-    if not data['owner_name'] or not data['amount']:
+    if not 'owner_name' in data or not 'amount' in data:
         response['status'] = "erro"
         response['tipo'] = "requisiçao nao contem owner ou quantia validos"
     elif not type(data['amount']) is int:
