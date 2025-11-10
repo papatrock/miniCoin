@@ -18,12 +18,13 @@ class BlockChain:
             current_balance = self.get_balance(owner_name)
             if current_balance + amount < 0:
                 print("Saldo insuficiente")
-                return
+                return False
 
         previous_block = self.tail
         new_block = Block.Block(owner_name, amount, previous_block.hash, nonce)
         previous_block.next = new_block
         self.tail = new_block
+        return True
 
     def get_balance(self, owner_name):
         # varre a block chain e retorna o saldo do owner

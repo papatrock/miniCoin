@@ -47,7 +47,6 @@ def client(host = 'localhost', port=8082):
         response = json.loads(response)
 
         if validResponse(response):
-            print("a")
             print(response)
         else:
             print("Resposta inválida")

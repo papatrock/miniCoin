@@ -7,7 +7,7 @@ def handleRequest(data):
 
     if not 'owner_name' in data or not 'amount' in data:
         response['status'] = "erro"
-        response['tipo'] = "requisiçao nao contem owner ou quantia validos"
+        response['tipo'] = "requisiçao nao contem owner ou quantia"
     elif not type(data['amount']) is int:
         response['status'] = "erro"
         response['tipo'] = "valor de quantia nao eh um inteiro"
@@ -39,6 +39,19 @@ def server(host = 'localhost', port=8082):
             data = json.loads(data)
             print ("Data: %s" % data)
             response = handleRequest(data)
+
+            if response['status'] == "pendente":
+                if blockchain.add_block_to_end(data['owner_name'], data['amount'], 0):
+                    response['status'] = "sucesso"
+                else:
+                    response['status'] = "erro"
+                    response['tipo'] = "saldo insuficiente"
+                response['owner_name'] = data['owner_name']
+                response['saldo'] = blockchain.get_balance(data['owner_name'])
+            elif 'owner_name' in data:
+                response['owner_name'] = data['owner_name']
+                response['saldo'] = blockchain.get_balance(data['owner_name'])
+
             print ("Sending %s to %s" % (response, address))
             json_response = json.dumps(response)
 
