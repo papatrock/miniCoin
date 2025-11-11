@@ -40,6 +40,9 @@ class BlockChain:
         return balance
 
     def print_chain(self):
+        print("\n======================")
+        print("Blockchain completa:")
+        print("======================")
         aux = self.head
         count = 0
 
@@ -49,7 +52,7 @@ class BlockChain:
             print(f"Amount:   {aux.amount}")
             print(f"Nonce:    {aux.nonce}")
             print(f"Hash:     {aux.hash}")
-            print(f" Prev. Hash: {aux.previous_hash}")
+            print(f"Prev. Hash: {aux.previous_hash}")
 
             if aux.next is not None:
                 print("|")
@@ -57,5 +60,4 @@ class BlockChain:
 
             aux = aux.next
             count += 1
-
-        print(f"\nfim da blockchain, numero de blocos:{count}")
+        print("======================")

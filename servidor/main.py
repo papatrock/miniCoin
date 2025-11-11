@@ -17,8 +17,15 @@ def handleRequest(data):
     return response
 
 def server(host = 'localhost', port=8082):
+    print("=============================================================================")
+    print("Iniciando servidor do Block Chain")
+    print("=============================================================================")
     # criar block chain inicial
-    blockchain = Blockchain.BlockChain() 
+    print("Criando genesis...")
+    blockchain = Blockchain.BlockChain()
+    print("Genesis criado com sucesso!")
+
+    blockchain.print_chain()
     # The maximum amount of data to be received at once
     data_payload = 2048
     # Create a TCP socket
@@ -29,13 +36,12 @@ def server(host = 'localhost', port=8082):
 
     # Bind the socket to the port
     server_address = (host, port)
-
-    print("Starting up echo server on %s port %s" % server_address)
+    print("Servidor iniciado no host: %s port: %s \n\n" % server_address)
     sock.bind(server_address)
     # Listen to clients, argument specifies the max no. of queued connections
     sock.listen(5)
     while True:
-        print ("Waiting to receive message from client")
+        print ("Esperando para receber a mensagem do cliente...")
 
         client, address = sock.accept()
         json_data = client.recv(data_payload)
@@ -44,22 +50,25 @@ def server(host = 'localhost', port=8082):
             data = json_data.decode('utf-8')
             data = json.loads(data)
 
-            print ("Data: %s" % data)
-
+            print ("Mensagem recebida, Dados: %s" % data)
+            print("Processando mensagem....")
             response = handleRequest(data)
 
             if response['status'] == "pendente":
                 if blockchain.add_block_to_end(data['owner_name'], data['amount'], 0):
+                    print("transação VALIDA, novo bloco inserido na BlockChain")
+                    blockchain.print_chain()
                     response['status'] = "sucesso"
                 else:
                     response['status'] = "erro"
                     response['tipo'] = "saldo insuficiente"
+                    print("transação INVALIDA: saldo insuficiente")
                 response['owner_name'] = data['owner_name']
                 response['saldo'] = blockchain.get_balance(data['owner_name'])
             elif 'owner_name' in data:
                 response['owner_name'] = data['owner_name']
                 response['saldo'] = blockchain.get_balance(data['owner_name'])
-            print ("Sending %s to %s" % (response, address))
+            print ("Enviando resposta %s para %s" % (response, address))
 
             json_response = json.dumps(response)
 
@@ -67,4 +76,7 @@ def server(host = 'localhost', port=8082):
             client.sendall(json_response.encode('utf-8'))
             # end connection
             client.close()
+            print("Fim da transação")
+            print("============================\n\n")
+
 server()
