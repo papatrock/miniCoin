@@ -1,0 +1,31 @@
+@startuml
+start
+    repeat
+      :Exibir Menu;
+
+      if (Usuário escolheu "Sair"?) then (sim)
+        #palegreen:Saindo...;
+        break
+      endif
+
+      ->Operação;
+
+      if (Transação positiva?) then (sim)
+          :Processar Depósito;
+          :Cria novo bloco e \n adiciona no fim da chain;
+      else (não)
+          :Processar Saque;
+          :Validar Saldo;
+
+          if (Transação válida?) then (sim)
+            :Cria novo bloco e \n adiciona no fim da chain;
+          else (não)
+            :Gera Erro;
+          endif
+      endif
+    repeat while (Usuário escolheu "Sair"?) is (não) not (sim)
+
+    ->Encerrando;
+    :Encerrar Sessão;
+stop
+@enduml
