@@ -39,8 +39,6 @@ class BlockChain:
 
         return balance
 
-    #def valid_transition(self, owner_name):
-
     def print_chain(self):
         aux = self.head
         count = 0
