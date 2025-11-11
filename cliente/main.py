@@ -27,34 +27,69 @@ def client(host = 'localhost', port=8082):
 
     print("Starting up echo client on %s port %s" % server_address)
     sock.connect(server_address)
-    # Send data
-    try:
-        data = {}
-        data['owner_name'] = input("Digite o nome do proprietario: ")
-        data['amount'] = int(input("Digite a quantia da movimentação: "))
+    while True:
+        print("\n=== Menu ===")
+        print("1. Nova movimentação")
+        print("2. Ver saldo")
+        print("3. Sair")
 
-        print ("Sending %s" % data)
+        choice = input("Escolha uma opção: ")
 
-        json_data = json.dumps(data)
+        if choice == "1":
+            try:
+                data = {}
+                data['owner_name'] = input("Digite o nome do proprietario: ")
+                data['amount'] = int(input("Digite a quantia da movimentação: "))
 
-        sock.sendall(json_data.encode('utf-8'))
+                print ("Sending %s" % data)
 
-        # Look for the response
-        json_response = sock.recv(data_payload)
-        response = json_response.decode('utf-8')
-        response = json.loads(response)
+                json_data = json.dumps(data)
 
-        if validResponse(response):
-            print(response)
+                sock.sendall(json_data.encode('utf-8'))
+
+                # Look for the response
+                json_response = sock.recv(data_payload)
+                response = json_response.decode('utf-8')
+                response = json.loads(response)
+
+                if validResponse(response):
+                    print(response)
+                else:
+                    print("Resposta inválida")
+            except socket.error as e:
+                print("Socket error: %s" %str(e))
+            except Exception as e:
+                print("Other exception: %s" %str(e))
+        elif choice == "2":
+            try:
+                data = {}
+                data['owner_name'] = input("Digite o nome do proprietario: ")
+                data['amount'] = 0
+
+                print ("Sending %s" % data)
+
+                json_data = json.dumps(data)
+
+                sock.sendall(json_data.encode('utf-8'))
+
+                # Look for the response
+                json_response = sock.recv(data_payload)
+                response = json_response.decode('utf-8')
+                response = json.loads(response)
+
+                if validResponse(response):
+                    print(response)
+                else:
+                    print("Resposta inválida")
+            except socket.error as e:
+                print("Socket error: %s" %str(e))
+            except Exception as e:
+                print("Other exception: %s" %str(e))
+        elif choice == "3":
+            print("Fechando conexão...")
+            sock.close()
+            break
         else:
-            print("Resposta inválida")
-
-    except socket.error as e:
-        print("Socket error: %s" %str(e))
-    except Exception as e:
-        print("Other exception: %s" %str(e))
-    finally:
-        print("Closing connection to the server")
-        sock.close()
+            print("Opçao invalida")
 
 client()
