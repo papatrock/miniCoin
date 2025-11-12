@@ -1,3 +1,6 @@
+## Patrick Oliveira Lemes - GRR20211777
+## Sabry Inacio Rafrafi - GRR20171622
+
 import socket
 import json
 import Blockchain
@@ -80,7 +83,7 @@ def server(host = 'localhost', port=8082):
                 print("Fim da transação")
                 print("============================\n\n")
             else:
-                print("Fechando conexão...")
+                print("\nFechando conexão...")
                 # end connection
                 client.close()
                 break

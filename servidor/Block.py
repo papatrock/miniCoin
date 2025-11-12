@@ -1,3 +1,6 @@
+## Patrick Oliveira Lemes - GRR20211777
+## Sabry Inacio Rafrafi - GRR20171622
+
 import time
 import hashlib
 
