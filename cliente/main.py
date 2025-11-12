@@ -86,6 +86,19 @@ def client(host = 'localhost', port=8082):
             except Exception as e:
                 print("Other exception: %s" %str(e))
         elif choice == "3":
+            try:
+                data = {}
+                data['exit'] = True
+
+                print ("Sending %s" % data)
+
+                json_data = json.dumps(data)
+
+                sock.sendall(json_data.encode('utf-8'))
+            except socket.error as e:
+                print("Socket error: %s" %str(e))
+            except Exception as e:
+                print("Other exception: %s" %str(e))
             print("Fechando conexão...")
             sock.close()
             break
