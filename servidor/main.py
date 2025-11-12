@@ -40,10 +40,12 @@ def server(host = 'localhost', port=8082):
     sock.bind(server_address)
     # Listen to clients, argument specifies the max no. of queued connections
     sock.listen(5)
+
+    client, address = sock.accept()
+
     while True:
         print ("Esperando para receber a mensagem do cliente...")
 
-        client, address = sock.accept()
         json_data = client.recv(data_payload)
 
         if json_data:
@@ -75,7 +77,7 @@ def server(host = 'localhost', port=8082):
             # eviar resposta
             client.sendall(json_response.encode('utf-8'))
             # end connection
-            client.close()
+            #client.close()
             print("Fim da transação")
             print("============================\n\n")
 
