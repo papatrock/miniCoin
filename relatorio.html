@@ -136,17 +136,40 @@
                 <h3>Classe Block</h3>
                     <p>
                         Toda operação, seja deposito ou retirada, gera um novo bloco que é adicionado no fim do BlockChain, para
-                        implementar isso criamos a classe <strong>Block</strong> responsavel por criar um novo bloco. Nela também é
+                        implementar isso criamos a classe <strong>Block</strong> no arquivo <strong>servidor/Block.py</strong> responsavel por criar um novo bloco. Nela também é
                         feito o calculo do hash do bloco com base no hash do bloco anterior, timestamp atual, o nonce e os dados,
-                        esses dados são concatenados e é aplicado o hash, gerando o hash do bloco atual. Optamos por utilizar o algoritimo
+                        esses dados são concatenados e é aplicado a função hash, gerando o hash do bloco atual. Optamos por utilizar o algoritimo
                         de hash <strong>sha256</strong> da biblioteca <strong>hashlib</strong> do python.
-
                     </p>
 
-            <h3>Classe BlockChain</h3>
+                <h3>Classe BlockChain</h3>
+                    <p>
+                        Já as operações que manipulam a BlockChain foram implementados na classe <strong>BlockChain</strong> implementado no arquivo
+                        <strong>servidor/Blockchain.py</strong>, nessa classe existem dois apontadores para facilitar as operações, o <strong>head</strong>
+                        que apontam para o primeiro bloco da blockchain e o <strong>tail</strong> que aponta para o último bloco; Os métodos implementados
+                        nessa classe foram:
+                        <ul>
+                            <li>
+                                <strong>create_genesis_block()</strong>: Cria o bloco "genesis", o primeiro bloco de toda BlockChain
+                            </li>
+                            <li>
+                                <strong>add_block_to_end(owner_name, amount, nonce)</strong>: Cria e insere um novo bloco no fim da BlockChain
+                            </li>
+                            <li>
+                                <strong> get_balance(owner_name)</strong>: Retorna o valor total de moedas do proprietario passado por parametro
+                            </li>
+                            <li>
+                                <strong>get_last_block()</strong>: Retorna o último bloco da BlockChain
+                            </li>
+                            <li>
+                                <strong>print_chain()</strong>: Imprime na tela todos os blocos da BlockChain
+                            </li>
+
+                        </ul>
+                    </p>
 
             <h2>funcionamento</h2>
-            <p>opções e deposito / retirada</p>
+            <img src="images/minicoin/diagrama.png" alt="Diagrama de funcionamento do sistema">
 
             <h2>Códigos-fonte</h2>
                 <p>Abaixo está a versão final dos códigos referentes à implementação proposta:</p>
@@ -168,20 +191,8 @@
                 <p>Teste 9: <a href="logs/teste9_cliente.txt">Cliente</a> <a href="logs/teste9_servidor.txt">Servidor</a></p>
                 <p>Teste 10: <a href="logs/teste10_cliente.txt">Cliente</a> <a href="logs/teste10_servidor.txt">Servidor</a></p>
                 <p>Teste 11: <a href="logs/teste11_cliente.txt">Cliente</a> <a href="logs/teste11_servidor.txt">Servidor</a></p>
-            <h2>Implementação da BlockChain</h2>
 
-
-            implementação em web socket aqui
-            <div>
-                cliente
-            </div>
-            <div>
-                servidor
-            </div>
         </div>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore quae incidunt sit quia nostrum molestiae voluptas commodi nobis cum natus quisquam deserunt impedit consectetur veritatis doloremque exercitationem nulla, ad maxime.</p>
-        <img src="images/minicoin/diagrama.png" alt="Diagrama de funcionamento do sistema">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim reiciendis illo fuga culpa nesciunt ea? Repellat perspiciatis sapiente dicta earum voluptatem rem eveniet quia. Maxime sapiente quis recusandae corrupti asperiores.</p>
     </section>
 
 </body>
