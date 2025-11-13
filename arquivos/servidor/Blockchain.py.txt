@@ -6,7 +6,7 @@ import Block
 class BlockChain:
 
     def __init__(self):
-        self.head = self.create_genesis_block()
+        self.head = self.create_genesis_block() # blockchain eh criada com um bloco genesis inicial
         self.tail = self.head
 
     def create_genesis_block(self):
@@ -17,7 +17,7 @@ class BlockChain:
         return self.tail
 
     def add_block_to_end(self, owner_name, amount, nonce):
-        if(amount < 0):
+        if(amount < 0): # em caso de amount negativo (RETIRADA) verifica se existe saldo suficiente
             current_balance = self.get_balance(owner_name)
             if current_balance + amount < 0:
                 print("Saldo insuficiente")

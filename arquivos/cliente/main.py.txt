@@ -20,15 +20,15 @@ def client(host = 'localhost', port=8082):
     print("=============================================================================")
     print("Iniciando cliente do Block Chain")
     print("=============================================================================")
-    # The maximum amount of data to be received at once
+    # A quantidade maxima de dados a ser recebida por vez
     data_payload = 2048
-    # Create a TCP/IP socket
+    # Cria socket TCP/IP
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Enable reuse address/port
+    # Habilita reuso de endereço/porta
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    # Connect the socket to the server
+    # Conecta o socket ao servidor
     server_address = (host, port)
 
     print("Cliente iniciado no host: %s port: %s \n\n" % server_address)
@@ -50,11 +50,11 @@ def client(host = 'localhost', port=8082):
 
                     print ("Enviando %s" % data)
 
-                    json_data = json.dumps(data)
+                    json_data = json.dumps(data) # as mensagens são enviadas e recebidas como um json
 
                     sock.sendall(json_data.encode('utf-8'))
 
-                    # Look for the response
+                    # Aguarda resposta
                     json_response = sock.recv(data_payload)
                     response = json_response.decode('utf-8')
                     response = json.loads(response)
@@ -80,7 +80,7 @@ def client(host = 'localhost', port=8082):
 
                     sock.sendall(json_data.encode('utf-8'))
 
-                    # Look for the response
+                    # Aguarda resposta
                     json_response = sock.recv(data_payload)
                     response = json_response.decode('utf-8')
                     response = json.loads(response)

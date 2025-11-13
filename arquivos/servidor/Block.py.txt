@@ -5,7 +5,7 @@ import time
 import hashlib
 
 class Block:
-    def __init__(self, owner_name, amount, previous_hash, nonce):
+    def __init__(self, owner_name, amount, previous_hash, nonce): # Inicializaçao do bloco
         self.owner_name = owner_name
         self.amount = amount
         self.timestamp = time.time()
@@ -15,7 +15,7 @@ class Block:
         
         self.hash = self.calculate_block_hash()
 
-    def calculate_block_hash(self):
+    def calculate_block_hash(self): # Usa campos do bloco para calcular o hash
         data = f"{self.owner_name}{self.amount}"
         data_to_hash = f"{self.previous_hash}{self.timestamp}{self.nonce}{data}"
         

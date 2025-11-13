@@ -15,7 +15,8 @@ def handleRequest(data):
         response['status'] = "erro"
         response['tipo'] = "valor de quantia nao eh um inteiro"
     else:
-        response['status'] = "pendente" # ainda precisa verificar se a transaçao eh valida
+        response['status'] = "pendente" # significa que a mensagem esta em um formato correto, 
+                                        # mas ainda precisa verificar se a transaçao eh valida
 
     return response
 
@@ -29,19 +30,19 @@ def server(host = 'localhost', port=8082):
     print("Genesis criado com sucesso!")
 
     blockchain.print_chain()
-    # The maximum amount of data to be received at once
+    # A quantidade maxima de dados a ser recebida por vez
     data_payload = 2048
-    # Create a TCP socket
+    # Cria socket TCP/IP
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    # Enable reuse address/port
+    # Habilita reuso de endereço/porta
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    # Bind the socket to the port
+    # Conecta o socket ao servidor
     server_address = (host, port)
     print("Servidor iniciado no host: %s port: %s \n\n" % server_address)
     sock.bind(server_address)
-    # Listen to clients, argument specifies the max no. of queued connections
+    # Escuta clientes
     sock.listen(5)
 
     client, address = sock.accept()
@@ -53,11 +54,12 @@ def server(host = 'localhost', port=8082):
 
         if json_data:
             data = json_data.decode('utf-8')
-            data = json.loads(data)
+            data = json.loads(data) # as mensagens são enviadas e recebidas como um json
 
             print ("Mensagem recebida, Dados: %s" % data)
             print("Processando mensagem....")
-            if not 'exit' in data:
+            if not 'exit' in data: # a presença de um campo 'exit' na mensagem indica que 
+                                   # o cliente encerrou a conexao
                 response = handleRequest(data)
 
                 if response['status'] == "pendente":
